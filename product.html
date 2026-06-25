@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Produk — SkinMatch</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Celebratory banner for quiz recommendation */
+    .recommendation-banner {
+      display: none;
+      background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(179, 134, 0, 0.1));
+      border: 1px solid var(--accent-emerald);
+      color: var(--text-primary);
+      padding: 1rem 2rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 2rem;
+      text-align: center;
+      font-weight: 500;
+      animation: fadeIn 0.5s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header>
+    <nav class="nav-container">
+      <a href="index.html" class="logo">
+        <span>SkinMatch</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Katalog</a></li>
+        <li><a href="quiz.html">Skin Quiz</a></li>
+      </ul>
+      <div>
+        <a href="index.html" class="btn btn-secondary">Kembali</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Product Detail Container -->
+  <main>
+    <!-- Special Recommendation Banner -->
+    <div id="rec-banner" class="recommendation-banner">
+      🎉 Hasil Analisis: Tipe kulit Anda sangat cocok dengan produk di bawah ini!
+    </div>
+
+    <div class="detail-container">
+      <!-- Left side: Image -->
+      <div class="detail-image-box">
+        <img id="p-image" src="" alt="" class="detail-image">
+      </div>
+
+      <!-- Right side: Info -->
+      <div class="detail-info-box">
+        <div class="detail-badge-row">
+          <span id="p-skin-badge" class="skin-badge"></span>
+        </div>
+        <h1 id="p-name" class="detail-title">Loading...</h1>
+        <span id="p-category" class="detail-category"></span>
+
+        <!-- Navigation Tabs -->
+        <div class="detail-tabs">
+          <button class="tab-btn active" onclick="switchTab(event, 'desc')">Deskripsi</button>
+          <button class="tab-btn" onclick="switchTab(event, 'ingredients')">Kandungan</button>
+          <button class="tab-btn" onclick="switchTab(event, 'benefits')">Manfaat</button>
+          <button class="tab-btn" onclick="switchTab(event, 'usage')">Cara Pakai</button>
+        </div>
+
+        <!-- Tab Content Area -->
+        <div id="tab-content" class="tab-content">
+          <!-- Dynamically filled -->
+        </div>
+
+        <div style="display: flex; gap: 1rem;">
+          <a href="quiz.html" class="btn btn-primary">Ulangi Tes Kulit</a>
+          <a href="index.html" class="btn btn-secondary">Kembali ke Katalog</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 SkinMatch Capstone Project. Universitas Internasional Batam.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    let activeProduct = null;
+
+    // Switch Tab Handler
+    function switchTab(event, tabName) {
+      if (!activeProduct) return;
+
+      // Remove active class from all buttons
+      const buttons = document.querySelectorAll(".tab-btn");
+      buttons.forEach(btn => btn.classList.remove("active"));
+
+      // Add active class to clicked button
+      event.currentTarget.classList.add("active");
+
+      // Render correct text
+      const contentBox = document.getElementById("tab-content");
+      if (tabName === "desc") contentBox.innerText = activeProduct.description;
+      if (tabName === "ingredients") contentBox.innerText = activeProduct.ingredients;
+      if (tabName === "benefits") contentBox.innerText = activeProduct.benefits;
+      if (tabName === "usage") contentBox.innerText = activeProduct.usage;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Parse parameters
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get("id");
+      const isRecommended = params.get("recommended");
+
+      // Show recommendation banner if recommended parameter exists
+      if (isRecommended === "true") {
+        const banner = document.getElementById("rec-banner");
+        if (banner) banner.style.display = "block";
+      }
+
+      // Find product
+      activeProduct = PRODUCTS.find(p => p.id === productId);
+
+      if (!activeProduct) {
+        // Fallback or redirect
+        window.location.href = "index.html";
+        return;
+      }
+
+      // Update Page Title
+      document.title = `${activeProduct.name} — SkinMatch`;
+
+      // Fill data
+      document.getElementById("p-name").innerText = activeProduct.name;
+      document.getElementById("p-category").innerText = activeProduct.category;
+      
+      const img = document.getElementById("p-image");
+      img.src = activeProduct.image;
+      img.alt = activeProduct.name;
+      img.onerror = () => {
+        img.src = `https://placehold.co/400x400/fafaf7/1b1b18?text=${encodeURIComponent(activeProduct.name)}`;
+      };
+
+      // Set skin type badge
+      const badge = document.getElementById("p-skin-badge");
+      badge.innerText = `${activeProduct.skinType} Skin`;
+      badge.className = "skin-badge"; // Reset classes
+      
+      let badgeClass = "badge-oily";
+      if (activeProduct.skinType === "Dry") badgeClass = "badge-dry";
+      if (activeProduct.skinType === "Sensitive") badgeClass = "badge-sensitive";
+      if (activeProduct.skinType === "Combination") badgeClass = "badge-combination";
+      badge.classList.add(badgeClass);
+
+      // Default to description tab
+      document.getElementById("tab-content").innerText = activeProduct.description;
+    });
+  </script>
+</body>
+</html>

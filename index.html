@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkinMatch — Solusi Skincare Interaktif Berbasis AR</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header>
+    <nav class="nav-container">
+      <a href="index.html" class="logo">
+        <span>SkinMatch</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Katalog</a></li>
+        <li><a href="quiz.html">Skin Quiz</a></li>
+      </ul>
+      <div>
+        <a href="quiz.html" class="btn btn-primary">Mulai Tes</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero">
+      <h1>Pindai Flyer,<br>Temukan Skincare Tepat</h1>
+      <p>Selamat datang di platform interaktif SkinMatch. Melalui flyer fisik berteknologi kode QR, kami menghubungkan Anda langsung dengan rekomendasi produk terbaik yang dirancang khusus untuk jenis kulit unik Anda.</p>
+      <div class="hero-btns">
+        <a href="quiz.html" class="btn btn-primary">Mulai Analisis Kulit</a>
+        <a href="#katalog" class="btn btn-secondary">Lihat Semua Produk</a>
+      </div>
+    </section>
+
+    <!-- Catalogue Section -->
+    <section id="katalog" style="padding-top: 4rem;">
+      <h2 class="section-title">Katalog Produk</h2>
+      
+      <!-- Grid Container -->
+      <div id="products-container" class="products-grid">
+        <!-- Rendered dynamically by JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 SkinMatch Capstone Project. Universitas Internasional Batam.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.getElementById("products-container");
+      if (!container) return;
+
+      // Render products from products.js (without price)
+      container.innerHTML = PRODUCTS.map(product => {
+        let badgeClass = "badge-oily";
+        if (product.skinType === "Dry") badgeClass = "badge-dry";
+        if (product.skinType === "Sensitive") badgeClass = "badge-sensitive";
+        if (product.skinType === "Combination") badgeClass = "badge-combination";
+
+        return `
+          <div class="product-card glass">
+            <div class="product-image-container">
+              <span class="skin-badge ${badgeClass}">${product.skinType} Skin</span>
+              <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='https://placehold.co/300x300/fafaf7/1b1b18?text=${encodeURIComponent(product.name)}'">
+            </div>
+            <div class="product-info">
+              <span class="product-category">${product.category}</span>
+              <h3 class="product-title">${product.name}</h3>
+              <p class="product-desc">${product.description}</p>
+              <div class="product-footer">
+                <a href="product.html?id=${product.id}" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Detail</a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    });
+  </script>
+</body>
+</html>

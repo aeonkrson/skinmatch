@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analisis Kulit — SkinMatch</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header>
+    <nav class="nav-container">
+      <a href="index.html" class="logo">
+        <span>SkinMatch</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Katalog</a></li>
+        <li><a href="quiz.html" class="active">Skin Quiz</a></li>
+      </ul>
+      <div>
+        <a href="index.html" class="btn btn-secondary">Kembali</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Quiz Container -->
+  <main>
+    <section style="padding: 2rem 0;">
+      <h1 class="section-title">Skin Type Analyzer</h1>
+      <p style="text-align: center; color: var(--text-secondary); max-width: 500px; margin: 0 auto 2rem auto;">Jawab 3 pertanyaan mudah untuk mengetahui tipe kulit Anda dan mendapatkan rekomendasi produk yang paling cocok.</p>
+      
+      <div class="glass quiz-container">
+        <!-- Progress Bar -->
+        <div class="progress-container">
+          <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        <!-- Dynamic Quiz Box -->
+        <div id="quiz-box">
+          <!-- Handled by quiz.js -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 SkinMatch Capstone Project. Universitas Internasional Batam.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
