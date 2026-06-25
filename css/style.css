@@ -280,10 +280,12 @@ main {
   letter-spacing: 0.05em;
 }
 
-.badge-oily { background: #e8f5e9; color: var(--accent-emerald); border: 1px solid #c8e6c9; }
-.badge-dry { background: #e3f2fd; color: var(--accent-blue); border: 1px solid #bbdefb; }
-.badge-sensitive { background: #ffebee; color: var(--accent-rose); border: 1px solid #ffcdd2; }
-.badge-combination { background: #fffde7; color: var(--accent-gold); border: 1px solid #fff9c4; }
+.badge-centella { background: #fff8e1; color: #ff8f00; border: 1px solid #ffe082; }
+.badge-hyalucica { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
+.badge-poremizing { background: #fce4ec; color: #c2185b; border: 1px solid #f8bbd0; }
+.badge-teatrica { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+.badge-tonebrightening { background: #f5f5f5; color: #616161; border: 1px solid #e0e0e0; }
+.badge-probiocica { background: #efebe9; color: #4e342e; border: 1px solid #d7ccc8; }
 
 .product-info {
   padding: 1.25rem;

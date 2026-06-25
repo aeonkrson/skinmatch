@@ -146,15 +146,18 @@
         img.src = `https://placehold.co/400x400/fafaf7/1b1b18?text=${encodeURIComponent(activeProduct.name)}`;
       };
 
-      // Set skin type badge
+      // Set line badge
       const badge = document.getElementById("p-skin-badge");
-      badge.innerText = `${activeProduct.skinType} Skin`;
+      badge.innerText = `${activeProduct.line} Line`;
       badge.className = "skin-badge"; // Reset classes
       
-      let badgeClass = "badge-oily";
-      if (activeProduct.skinType === "Dry") badgeClass = "badge-dry";
-      if (activeProduct.skinType === "Sensitive") badgeClass = "badge-sensitive";
-      if (activeProduct.skinType === "Combination") badgeClass = "badge-combination";
+      let badgeClass = "badge-centella";
+      if (activeProduct.line === "Centella") badgeClass = "badge-centella";
+      if (activeProduct.line === "Hyalu-Cica") badgeClass = "badge-hyalucica";
+      if (activeProduct.line === "Poremizing") badgeClass = "badge-poremizing";
+      if (activeProduct.line === "Tea-Trica") badgeClass = "badge-teatrica";
+      if (activeProduct.line === "Tone Brightening") badgeClass = "badge-tonebrightening";
+      if (activeProduct.line === "Probio-Cica") badgeClass = "badge-probiocica";
       badge.classList.add(badgeClass);
 
       // Default to description tab

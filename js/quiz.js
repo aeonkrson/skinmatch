@@ -1,42 +1,50 @@
 const QUESTIONS = [
   {
     id: 1,
-    question: "Bagaimana kondisi kulit wajah Anda di siang hari?",
+    question: "Bagaimana kondisi utama kulit wajah Anda saat ini?",
     options: [
-      { text: "Sangat berminyak di seluruh area wajah", score: { Oily: 2, Combination: 0.5 } },
-      { text: "Kering, kusam, bahkan bersisik/mengelupas", score: { Dry: 2 } },
-      { text: "Berminyak di area T-zone (dahi, hidung, dagu) tapi kering di area pipi", score: { Combination: 2 } },
-      { text: "Mudah memerah, terasa perih, gatal, atau iritasi", score: { Sensitive: 2 } }
+      { text: "Mudah memerah, perih, terasa gatal, atau iritasi ringan", score: { Centella: 2 } },
+      { text: "Sangat kering, kencang, kasar, atau bersisik", score: { "Hyalu-Cica": 2 } },
+      { text: "Berminyak di dahi dan hidung, tapi pori-pori tampak membesar", score: { Poremizing: 2 } },
+      { text: "Mudah berjerawat, beruntusan, dan sangat berminyak", score: { "Tea-Trica": 2 } },
+      { text: "Kusam, banyak noda hitam bekas jerawat, warna tidak merata", score: { "Tone Brightening": 2 } },
+      { text: "Barrier kulit terasa rusak parah, kering ekstrem, perih mengelupas", score: { "Probio-Cica": 2 } }
     ]
   },
   {
     id: 2,
-    question: "Apa masalah utama kulit yang paling ingin Anda atasi?",
+    question: "Apa masalah utama yang paling mendesak untuk diatasi?",
     options: [
-      { text: "Jerawat membandel, pori-pori besar, dan komedo", score: { Oily: 2, Combination: 0.5 } },
-      { text: "Kulit terasa kasar, kaku, dan garis halus tampak jelas", score: { Dry: 2 } },
-      { text: "Kadar minyak tidak merata (kadang berminyak, kadang kering)", score: { Combination: 2 } },
-      { text: "Kemerahan tiba-tiba dan mudah bereaksi buruk terhadap kosmetik", score: { Sensitive: 2 } }
+      { text: "Menenangkan kulit sensitif yang meradang/iritasi", score: { Centella: 2 } },
+      { text: "Mengatasi kekeringan parah dan mengunci hidrasi kulit", score: { "Hyalu-Cica": 2 } },
+      { text: "Mengecilkan pori-pori dan mengontrol minyak berlebih", score: { Poremizing: 2 } },
+      { text: "Menyembuhkan jerawat meradang dan meredakan beruntusan", score: { "Tea-Trica": 2 } },
+      { text: "Mencerahkan kulit kusam dan memudarkan flek hitam", score: { "Tone Brightening": 2 } },
+      { text: "Memperbaiki dan memperkuat kembali skin barrier yang rusak", score: { "Probio-Cica": 2 } }
     ]
   },
   {
     id: 3,
     question: "Bagaimana reaksi kulit Anda setelah mencuci wajah?",
     options: [
-      { text: "Segar dan bersih, tapi minyak muncul kembali dengan cepat", score: { Oily: 2 } },
-      { text: "Terasa kencang, kaku, dan seperti ditarik", score: { Dry: 2 } },
-      { text: "Bersih di dahi dan hidung, tapi pipi terasa kering", score: { Combination: 2 } },
-      { text: "Tampak memerah atau timbul rasa perih/gatal", score: { Sensitive: 2 } }
+      { text: "Mudah memerah, gatal, atau muncul reaksi perih ringan", score: { Centella: 2 } },
+      { text: "Terasa kaku, tertarik, dan sangat kering", score: { "Hyalu-Cica": 2 } },
+      { text: "Terlihat mengilap berminyak dengan pori-pori terbuka lebar", score: { Poremizing: 2 } },
+      { text: "Cepat berminyak kembali dan terasa rentan berjerawat", score: { "Tea-Trica": 2 } },
+      { text: "Terlihat kusam, layu, dan kurang bercahaya", score: { "Tone Brightening": 2 } },
+      { text: "Perih, kering terkelupas, serta gatal tak nyaman", score: { "Probio-Cica": 2 } }
     ]
   }
 ];
 
 let currentStep = 0;
 let userScores = {
-  Oily: 0,
-  Dry: 0,
-  Sensitive: 0,
-  Combination: 0
+  Centella: 0,
+  "Hyalu-Cica": 0,
+  Poremizing: 0,
+  "Tea-Trica": 0,
+  "Tone Brightening": 0,
+  "Probio-Cica": 0
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -81,8 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const selectedOption = currentQuestion.options[optionIndex];
         
         // Sum score
-        for (const [skinType, points] of Object.entries(selectedOption.score)) {
-          userScores[skinType] += points;
+        for (const [line, points] of Object.entries(selectedOption.score)) {
+          userScores[line] += points;
         }
 
         // Go to next step
@@ -104,26 +112,31 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     // Calculate highest score
-    let recommendedType = "Oily"; // fallback
+    let recommendedLine = "Centella"; // fallback
     let maxScore = -1;
     
-    for (const [type, score] of Object.entries(userScores)) {
+    for (const [line, score] of Object.entries(userScores)) {
       if (score > maxScore) {
         maxScore = score;
-        recommendedType = type;
+        recommendedLine = line;
       }
     }
 
-    // Find product matching recommended skin type
-    const matchedProduct = PRODUCTS.find(p => p.skinType === recommendedType);
+    // Map recommended line to a specific hero product ID:
+    const lineHeroProducts = {
+      "Centella": "centella-ampoule",
+      "Hyalu-Cica": "hyalu-cica-blue-serum",
+      "Poremizing": "poremizing-fresh-ampoule",
+      "Tea-Trica": "tea-trica-relief-ampoule",
+      "Tone Brightening": "tone-brightening-ampoule",
+      "Probio-Cica": "probio-cica-ampoule"
+    };
+
+    const heroProductId = lineHeroProducts[recommendedLine] || "centella-ampoule";
     
     // Delay redirect for animation effect
     setTimeout(() => {
-      if (matchedProduct) {
-        window.location.href = `product.html?id=${matchedProduct.id}&recommended=true`;
-      } else {
-        window.location.href = "index.html";
-      }
+      window.location.href = `product.html?id=${heroProductId}&recommended=true`;
     }, 1500);
   }
 
